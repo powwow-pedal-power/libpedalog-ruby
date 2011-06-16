@@ -23,9 +23,9 @@ require 'rubygems/package_task'
 spec = Gem::Specification.new do |s|
   s.platform      = Gem::Platform::RUBY
   s.name          = "pedalog"
-  s.version       = "0.1.2"
+  s.version       = "0.1.3"
   s.author        = "Dan Haughey"
-  s.email         = "dan at the domain greenlynx dot co dot uk"
+  s.email         = "http://www.powwow-pedal-power.org.uk"
   s.summary       = "Ruby wrapper to the libpedalog library"
   s.description   = "This is a simple tool for reading data from Pedalog devices. It relies on the libpedalog library to do the actual
 communication with the device: https://github.com/greenlynx/libpedalog
