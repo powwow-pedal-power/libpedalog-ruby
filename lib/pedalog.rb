@@ -42,7 +42,7 @@ module Pedalog
       devices = max_devices.times.collect do |i|
         Interface::PedalogDevice.new(device + i * Interface::PedalogDevice.size)
       end
-      
+
       device_count = Interface::pedalog_find_devices(device)
 
       result = device_count.times.collect do |i|
@@ -59,7 +59,7 @@ module Pedalog
       max_error_message = Interface::pedalog_get_max_error_message
 
       ptr = FFI::MemoryPointer.new(:char, max_error_message, false)
-      
+
       Interface::pedalog_get_error_message(error, ptr)
 
       message = ptr.read_string
@@ -73,9 +73,9 @@ module Pedalog
     def read_data
       device = Interface::PedalogDevice.new
       device.from_native(self)
-      
+
       data = Interface::PedalogData.new
-      
+
       result = Interface::pedalog_read_data(device, data)
 
       return nil if result == PEDALOG_ERROR_NO_DEVICE_FOUND
@@ -106,18 +106,18 @@ module Pedalog
     extend FFI::Library
 
     class PedalogDevice < FFI::Struct
-      layout :id, :int
+      layout :serial, :int
 
       def to_native
         device = Device.new
 
-        device.serial = self[:id]
+        device.serial = self[:serial]
 
         device
       end
 
       def from_native(device)
-        self[:id] = device.serial
+        self[:serial] = device.serial
       end
     end
 
@@ -146,7 +146,7 @@ module Pedalog
     end
 
     ffi_lib 'libpedalog'
-      
+
     attach_function :pedalog_init, [ ], :int
     attach_function :pedalog_get_max_devices, [ ], :int
     attach_function :pedalog_get_max_error_message, [ ], :int
